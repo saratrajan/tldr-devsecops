@@ -1,0 +1,43 @@
+# Node
+node_modules/
+npm-debug.log*
+
+# macOS / editors
+.DS_Store
+.idea/
+*.iml
+.vscode/
+
+# Android build output
+android/.gradle/
+android/build/
+android/app/build/
+android/capacitor-cordova-android-plugins/build/
+android/.idea/
+android/local.properties
+android/captures/
+android/.cxx/
+*.apk
+*.aab
+*.ap_
+
+# Capacitor copies these on every `cap sync`
+android/app/src/main/assets/public/
+android/app/src/main/assets/capacitor.config.json
+android/app/src/main/assets/capacitor.plugins.json
+android/app/src/main/res/xml/config.xml
+
+# Secrets and signing: never commit
+*.jks
+*.keystore
+keystore.properties
+.env
+.env.*
+google-services.json
+
+# Local tooling
+*.log
+/tmp/
+
+# Claude's patching
+*.patch

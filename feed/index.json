@@ -1,0 +1,202 @@
+{
+ "version": 1,
+ "updated": "2026-10-19T16:57:16.093Z",
+ "editions": [
+  {
+   "date": "2026-10-19",
+   "file": "days/2026-10-19.json",
+   "headline": "OpenCode breach exposes API keys of 1.4% of console users",
+   "counts": {
+    "tldr": 4,
+    "it": 1,
+    "devops": 6,
+    "infosec": 10
+   },
+   "total": 21,
+   "pages": 8,
+   "hash": "2fa06ef15946"
+  },
+  {
+   "date": "2026-10-18",
+   "file": "days/2026-10-18.json",
+   "headline": "Ivanti Connect Secure zero-day chained to root, exploited",
+   "counts": {
+    "tldr": 4,
+    "it": 6,
+    "devops": 6,
+    "infosec": 5
+   },
+   "total": 21,
+   "pages": 8,
+   "hash": "d678532916cb"
+  },
+  {
+   "date": "2026-10-17",
+   "file": "days/2026-10-17.json",
+   "headline": "Cisco Secure Email Gateway zero-day exploited (CVSS 9.8)",
+   "counts": {
+    "tldr": 4,
+    "it": 5,
+    "devops": 6,
+    "infosec": 5
+   },
+   "total": 20,
+   "pages": 7,
+   "hash": "2a4964a0ac27"
+  },
+  {
+   "date": "2026-10-16",
+   "file": "days/2026-10-16.json",
+   "headline": "Ivanti Connect Secure zero-day exploited, chained to root",
+   "counts": {
+    "tldr": 4,
+    "it": 6,
+    "devops": 6,
+    "infosec": 5
+   },
+   "total": 21,
+   "pages": 8,
+   "hash": "5b665915a0af"
+  },
+  {
+   "date": "2026-10-15",
+   "file": "days/2026-10-15.json",
+   "headline": "GitLab CVSS 10.0 flaw allows unauthenticated RCE",
+   "counts": {
+    "tldr": 4,
+    "it": 6,
+    "devops": 6,
+    "infosec": 5
+   },
+   "total": 21,
+   "pages": 8,
+   "hash": "4ba874b01be4"
+  },
+  {
+   "date": "2026-10-14",
+   "file": "days/2026-10-14.json",
+   "headline": "Vghost: any local user to root on Linux 4.11 to 7.2",
+   "counts": {
+    "tldr": 4,
+    "it": 6,
+    "devops": 6,
+    "infosec": 5
+   },
+   "total": 21,
+   "pages": 8,
+   "hash": "0a9867170c0d"
+  },
+  {
+   "date": "2026-10-13",
+   "file": "days/2026-10-13.json",
+   "headline": "Telegram Desktop one-click account takeover (CVE-2026-107181)",
+   "counts": {
+    "tldr": 4,
+    "it": 6,
+    "devops": 6,
+    "infosec": 5
+   },
+   "total": 21,
+   "pages": 8,
+   "hash": "74f3d078c231"
+  },
+  {
+   "date": "2026-10-12",
+   "file": "days/2026-10-12.json",
+   "headline": "Tensorlake npm worm wipes machines on token revoke",
+   "counts": {
+    "tldr": 4,
+    "it": 6,
+    "devops": 6,
+    "infosec": 5
+   },
+   "total": 21,
+   "pages": 8,
+   "hash": "e7c847e262b6"
+  },
+  {
+   "date": "2026-10-11",
+   "file": "days/2026-10-11.json",
+   "headline": "Tensorlake npm worm wipes machines if token revoked",
+   "counts": {
+    "tldr": 4,
+    "it": 6,
+    "devops": 6,
+    "infosec": 10
+   },
+   "total": 26,
+   "pages": 9,
+   "hash": "90a364c0d48f"
+  },
+  {
+   "date": "2026-10-10",
+   "file": "days/2026-10-10.json",
+   "headline": "Tensorlake npm worm wipes machines if you revoke its token",
+   "counts": {
+    "tldr": 4,
+    "it": 6,
+    "devops": 6,
+    "infosec": 5
+   },
+   "total": 21,
+   "pages": 8,
+   "hash": "2f2aff8eb1f7"
+  },
+  {
+   "date": "2026-10-09",
+   "file": "days/2026-10-09.json",
+   "headline": "Citrix NetScaler SAML zero-day under active exploitation",
+   "counts": {
+    "tldr": 4,
+    "it": 6,
+    "devops": 6,
+    "infosec": 5
+   },
+   "total": 21,
+   "pages": 8,
+   "hash": "009b035f30fa"
+  },
+  {
+   "date": "2026-10-08",
+   "file": "days/2026-10-08.json",
+   "headline": "Citrix NetScaler SAML zero-day exploited in the wild",
+   "counts": {
+    "tldr": 4,
+    "it": 6,
+    "devops": 6,
+    "infosec": 5
+   },
+   "total": 21,
+   "pages": 8,
+   "hash": "fd52ab27273d"
+  },
+  {
+   "date": "2026-10-07",
+   "file": "days/2026-10-07.json",
+   "headline": "Roundcube SQL injection under active exploitation",
+   "counts": {
+    "tldr": 4,
+    "it": 6,
+    "devops": 6,
+    "infosec": 5
+   },
+   "total": 21,
+   "pages": 8,
+   "hash": "194f3f21a886"
+  },
+  {
+   "date": "2026-10-06",
+   "file": "days/2026-10-06.json",
+   "headline": "Roundcube pre-auth SQL injection actively exploited",
+   "counts": {
+    "tldr": 4,
+    "it": 6,
+    "devops": 0,
+    "infosec": 10
+   },
+   "total": 20,
+   "pages": 7,
+   "hash": "d3711ba257e7"
+  }
+ ]
+}

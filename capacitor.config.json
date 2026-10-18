@@ -1,0 +1,7 @@
+{
+  "appId": "com.tldr.feed",
+  "appName": "TL;DR",
+  "webDir": "www",
+  "backgroundColor": "#07172f",
+  "android": { "backgroundColor": "#07172f" }
+}

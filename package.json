@@ -1,0 +1,26 @@
+{
+  "name": "tldr-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "TL;DR daily tech news brief archive",
+  "scripts": {
+    "sync": "cap sync android",
+    "apk": "cap sync android && cd android && ./gradlew assembleDebug",
+    "feed:publish": "node scripts/publish-feed.js",
+    "feed:lint": "node scripts/lint-feed.js",
+    "test": "node scripts/test.js",
+    "feed:dedupe-report": "node scripts/dedupe-report.js"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.5.3",
+    "@capacitor/app": "^8.1.2",
+    "@capacitor/cli": "^8.5.3",
+    "@capacitor/core": "^8.5.3",
+    "@capgo/capacitor-media-session": "^8.1.5",
+    "@fontsource/bricolage-grotesque": "^5.3.0",
+    "@fontsource/jetbrains-mono": "^5.3.0",
+    "@fontsource/newsreader": "^5.3.0",
+    "@fontsource/silkscreen": "^5.3.0",
+    "@fontsource/vt323": "^5.3.0"
+  }
+}

@@ -1,0 +1,33 @@
+HOST_A: Hi, I'm Alice, and welcome to T L D R Daily, your quick tour of today's tech news.
+HOST_B: And I'm Michael. Today is heavy on security, with a few platform and A I stories that really matter for how teams build and ship.
+HOST_A: Let's start with the one that needs action first. Ivanti has warned about a new zero-day in its Connect Secure V P N, and attackers are already using it.
+HOST_B: It's an authentication bypass, and it's easy to exploit. That lets an attacker run commands on the device without ever logging in. Volexity has seen one threat actor chain it with two other flaws to get root access.
+HOST_A: And root on a V P N gateway is about as bad as it gets, because that box sits between the internet and everything inside.
+HOST_B: Right. And it isn't alone this week. The InfoSec newsletter also flagged a critical zero-day in Cisco's Secure Email Gateway, with a severity score of nine point eight out of ten, and attackers are exploiting that one too.
+HOST_A: So two different vendors, and the same pattern.
+HOST_B: Exactly. Internet-facing appliances, patched slowly, and attacked fast. If you run either product, check your exposure and patch before anything else today.
+HOST_A: There's a third one in that family. Google warned that suspected China-linked hackers could start mass-exploiting a BeyondTrust remote support flaw that was already used in targeted attacks back in August.
+HOST_B: BeyondTrust says its hosted service is already patched. If you run it yourself, you need the latest patches, and the privileged remote access product got a precautionary one as well. The I T newsletter covered this too.
+HOST_A: Now to data. A breach at CenterPoint Energy exposed more than a million Texans.
+HOST_B: Names, addresses, social security numbers, and driver's license numbers. A hacker claims to have taken about seven and a half million records, and posted a two and a half gigabyte archive.
+HOST_A: So if you're in Texas, expect very convincing phishing that quotes real details about you.
+HOST_B: Yes. If you were affected, consider freezing your credit. Also, Meta is telling about fifteen hundred people, mostly US employees, that their data was stolen in a Git Hub breach. Meta says nearly all of it was source code, and most of the personal data was test data.
+HOST_A: Which leads into developer tooling. A flaw in the preview pane of Claude Code Desktop let malicious web content in a public repository run automatically when someone asked it to review that repo.
+HOST_B: The chained weaknesses got around the sandbox and could steal cloud, Git Hub, and S S H credentials. Anthropic patched it after researchers found a bypass of the first fix. The advice is simple. Update, and stop keeping long-lived credentials on your laptop.
+HOST_A: That theme shows up in the Dev Ops newsletter too.
+HOST_B: It does. Pulumi's secrets service can now mint short-lived tokens for any service that accepts them, and they expire within an hour. That means no static A P I keys sitting around for tools like Anthropic or JFrog.
+HOST_A: And there's a related warning about containers.
+HOST_B: A clean vulnerability scan only covers known issues. Malware like the Nx Console compromise needs no known bug at all, so a clean scan can't tell you an image is trustworthy.
+HOST_A: One more security item, a memory bug. A flaw in how curl handles H T T P two could let a malicious server run code on your machine. It's fixed in curl eight point two three.
+HOST_B: It was found by Anthropic's open source scanner. The maintainers rated it below critical, because exploiting it takes a large upload and depends on how memory happens to be laid out on your system.
+HOST_A: Moving to platform news. Anthropic says it outgrew git. With A I generated code merging thirty thousand changes a day, it built its own version control system called Scion and moved its whole monorepo in five months.
+HOST_B: The design assumes everyone is always online, with a central server, server-side commits, and sparse checkouts. The result is about two hundred times less processor and memory use than the old git mirrors, and checkouts in C I dropped from minutes to seconds.
+HOST_A: Agents are changing infrastructure work too. Spacelift now routes changes from Cursor's agents through the same policy checks and approvals as human changes.
+HOST_B: That matters, because one report says seventy-six percent of people would apply A I written Terraform with little review. Putting policy in the pipeline means the agent doesn't get a shortcut.
+HOST_A: Quick-fire round. Cloudflare's gateway now lets you run custom code on web traffic, and its data loss prevention can check whether a detected credential is still active.
+HOST_B: Firefox Enterprise launched with central policy management and a self-hostable admin console, starting in four European countries. Windows eleven got memory and reliability fixes, and Google's A I Inbox is rolling out to paid Workspace customers in the US.
+HOST_A: And on the business side, Anthropic reportedly grew third quarter revenue about forty-five percent, to sixteen point eight billion dollars, with I P O talk that could value it near two trillion.
+HOST_B: Meta released Muse Spark Open, an eight hundred sixteen billion parameter open model that runs on two Mac Studios. Meanwhile, CoreWeave's borrowing costs are climbing as investors worry about all that A I debt.
+HOST_A: If you only do three things today, patch Ivanti and Cisco, rotate any long-lived developer credentials, and put policy checks in front of your A I agents.
+HOST_B: That's our brief. Thanks for listening. I'm Michael.
+HOST_A: And I'm Alice. See you tomorrow.
