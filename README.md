@@ -7,6 +7,20 @@ Screens: Today, Archive (day cards by week), Reader (binder page-flip with InfoS
 - `www/` is the whole app (plain HTML, CSS, JS). `android/` is the generated Capacitor project.
 - `reference/` holds only `podcast-example-script.txt`, the model script the routine reads for the podcast.
 
+## Screenshots
+
+Phone width, light and dark. The player is a retro Winamp-style window with real spectrum bars, a 7-segment clock and the transcript as the playlist.
+
+| Today | Archive | Reader |
+|---|---|---|
+| <img src="docs/screenshots/01-today.png" width="220"> | <img src="docs/screenshots/02-archive.png" width="220"> | <img src="docs/screenshots/03-reader.png" width="220"> |
+
+| Player (light) | Player (dark) | Minimized (light) | Minimized (dark) |
+|---|---|---|---|
+| <img src="docs/screenshots/04-player-light.png" width="180"> | <img src="docs/screenshots/05-player-dark.png" width="180"> | <img src="docs/screenshots/08-mini-player-light.png" width="180"> | <img src="docs/screenshots/07-mini-player-dark.png" width="180"> |
+
+The minimized player sits above the bottom bar. It keeps playing, shows the time and title, and has a pause button; tap it to open the full player again.
+
 ## Build the APK
 
 Needs Node 22+, JDK 21 and the Android SDK (Android Studio installs it).
@@ -18,7 +32,7 @@ npm run apk                                  # debug APK
 ```
 
 Or open the `android/` folder in Android Studio and press Run.
-Every push to `main` also builds the APK in GitHub Actions (`.github/workflows/android.yml`). Download it from the run's artifacts.
+There is no CI: the repo has no GitHub Actions workflows, and the APK is built locally.
 
 ## Try the UI in a browser
 
@@ -40,7 +54,7 @@ publish script from the pages (incoming values are ignored). Days written before
 app and the index derive them from the pages with the same rule (www/js/shared.js).
 ```
 
-Publish a day (this is what the routine runs). No GitHub Actions are used.
+Publish a day (this is what the routine runs).
 
 ```
 node scripts/publish-feed.js edition.json    # sanitize, lint, skip near-duplicates, write the day, rebuild the index
