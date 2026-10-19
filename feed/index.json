@@ -1,6 +1,6 @@
 {
  "version": 1,
- "updated": "2026-10-19T21:18:36.940Z",
+ "updated": "2026-10-19T21:22:01.772Z",
  "editions": [
   {
    "date": "2026-10-19",
@@ -10,11 +10,11 @@
     "tldr": 4,
     "it": 6,
     "devops": 6,
-    "infosec": 10
+    "infosec": 5
    },
-   "total": 26,
-   "pages": 9,
-   "hash": "caac8e4d60af"
+   "total": 21,
+   "pages": 8,
+   "hash": "8ef5b868bc91"
   },
   {
    "date": "2026-10-18",
