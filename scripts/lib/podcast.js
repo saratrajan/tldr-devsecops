@@ -6,7 +6,9 @@ const {spawnSync}=require('child_process');
 const EMAIL=/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/;
 const URLISH=/(https?:\/\/|www\.)/i;
 const BAD=/unsubscribe|manage your subscription|referral/i;
-const LIMITS={minWords:700,maxWords:1200,warnLow:850,warnHigh:1100,minTurns:16,maxTurns:140,maxTurnWords:80,warnTurnWords:60};
+// Fillers the voice engine cannot say naturally: it spells "Hm" as letters and sounds robotic on the others.
+const FILLER=/\b(h+m+|m{2,}|mhm|uh+|um+|erm|huh|yeah|yep|yup)\b/i;
+const LIMITS={minWords:800,maxWords:1200,warnLow:850,warnHigh:1100,minTurns:16,maxTurns:140,maxTurnWords:80,warnTurnWords:60};
 
 function parseScript(text){
   const turns=[],errors=[];
@@ -32,6 +34,8 @@ function lintScript(text){
     else if(w>LIMITS.warnTurnWords)warn(`line ${t.line}: long turn (${w} words)`);
     run=t.h===prev?run+1:1;prev=t.h;
     if(run>3)err(`line ${t.line}: more than 3 turns in a row by the same host`);
+    const fm=t.t.match(FILLER);
+    if(fm)err(`line ${t.line}: the filler "${fm[0]}" sounds robotic; use a real reaction such as "Exactly." or "Absolutely." instead`);
     if(URLISH.test(t.t))err(`line ${t.line}: contains a URL`);
     if(EMAIL.test(t.t))err(`line ${t.line}: contains an email address`);
     if(BAD.test(t.t))err(`line ${t.line}: contains subscription or referral text`);

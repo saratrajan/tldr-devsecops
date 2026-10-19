@@ -96,7 +96,7 @@ How it flows:
 
 Commands:
 ```
-node scripts/lint-podcast-script.js script.txt          # length 700-1200 words, speakable text, no URLs or emails
+node scripts/lint-podcast-script.js script.txt          # length 800-1200 words, speakable text, both hosts sign off by name, no fillers (hm, mm, uh, yeah), no URLs or emails
 NO_PUSH=1 bash scripts/publish-podcast.sh script.txt --date YYYY-MM-DD   # build and check, do not push
 node scripts/lint-podcast.js podcast.json latest.mp3     # check a finished podcast
 npm test                                                # includes the podcast scripts (uses a fast fake synthesizer)

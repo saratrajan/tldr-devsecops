@@ -168,6 +168,11 @@ const lintFeed=feed=>spawnSync('node',[path.join(__dirname,'lint-feed.js')],{env
     else t('podcast: the spectrum is computed from real audio (tone lands in its band, silence stays dark)',()=>assert.strictEqual(py.status,0,py.stdout+py.stderr)); }
   { const py=spawnSync('python3',[path.join(__dirname,'podcast','test_plan.py')],{encoding:'utf8'});
     t('podcast: pacing, pauses, overlap and voice blending are planned as designed',()=>assert.strictEqual(py.status,0,py.stdout+py.stderr)); }
+  t('podcast script: robotic fillers (hm, mm, uh, um, huh, yeah) are rejected, real reactions are fine',()=>{
+    for(const bad of ["Hm, that's the part to watch.","Hmm, right.","Mm, okay.","Mmm.","Uh, so.","Um, well.","Huh, that's odd.","Yeah, that matters.","Mhm.","Hhmm, true."])
+      assert.ok(/filler/.test(errs(good+'\nHOST_A: '+bad+'\n')),bad);
+    for(const okay of ["Exactly, that's the part to watch.","Absolutely.","Yes, because it matters."])
+      assert.ok(!/filler/.test(errs(good+'\nHOST_A: '+okay+'\n')),okay)});
   t('podcast script: both hosts must sign off with their own name',()=>{
     const body=good.trim().split('\n').slice(0,-2),withEnd=(a,b)=>body.concat([a,b]).join('\n');
     const ok=/sign-offs where each host says their own name/;
@@ -200,7 +205,7 @@ fs.writeFileSync(path.join(out,'podcast.json'),JSON.stringify({version:1,date,ti
       const r=pub('2026-10-19');assert.strictEqual(r.status,0,r.stdout+r.stderr);
       assert.strictEqual(gitOut('rev-list','--count','podcast'),'1');
       assert.deepStrictEqual(gitOut('ls-tree','--name-only','podcast').split('\n').sort(),['latest.mp3','podcast.json']);
-      const m=JSON.parse(gitOut('show','podcast:podcast.json'));assert.strictEqual(m.date,'2026-10-19');assert.strictEqual(m.segments.length,33)});
+      const m=JSON.parse(gitOut('show','podcast:podcast.json'));assert.strictEqual(m.date,'2026-10-19');assert.strictEqual(m.segments.length,good.trim().split('\n').length)});
     t('publish-podcast: a second push replaces the branch and keeps a single commit',()=>{
       const before=gitOut('rev-parse','podcast');const r=pub('2026-10-19');assert.strictEqual(r.status,0,r.stdout+r.stderr);
       assert.notStrictEqual(gitOut('rev-parse','podcast'),before);assert.strictEqual(gitOut('rev-list','--count','podcast'),'1')});

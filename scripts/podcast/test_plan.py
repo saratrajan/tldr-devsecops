@@ -40,5 +40,8 @@ check("the article A is left alone", tc("A new ransomware and A Postgres bug", p
 check("names with an A are left alone", tc("Alice and Anthropic", pr) == "Alice and Anthropic")
 check("Hm is spoken as a hum, not the letters H M", tc("Hm, that is odd. And hm, maybe. Mm, right.", pr) == "Hmm, that is odd. And hmm, maybe. Hmm, right.", tc("Hm, that is odd. And hm, maybe. Mm, right.", pr))
 check("Hmm and Home are left alone", tc("Hmm, home and Hammer", pr) == "Hmm, home and Hammer")
+R = plan_turns([("A", LONG), ("B", "Exactly, that is the part to watch."), ("A", LONG), ("B", "Absolutely."), ("A", LONG), ("B", "Okay, so what do I do today?")])
+check("reactions like Exactly and Absolutely are spoken at about 0.9x", all(0.88 <= R[i]["speed"] <= 0.92 for i in (1, 3)), [round(R[i]["speed"], 3) for i in (1, 3)])
+check("a long explanation is not slowed to reaction pace", all(R[i]["speed"] > 0.93 for i in (0, 2, 4)))
 check("default voices are the chosen blends", ns["VOICES"] == {"A": "af_heart:0.7,af_bella:0.3", "B": "am_michael:0.6,am_adam:0.4"})
 sys.exit(1 if fails else 0)

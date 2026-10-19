@@ -30,7 +30,7 @@ NAMES = {"A": "Alice", "B": "Michael"}
 RATE = 24000
 LEAD, TURN_GAP, CHUNK_GAP, TAIL = 0.25, 0.45, 0.12, 0.6      # seconds of silence
 MAX_CHUNK_CHARS = 280
-REACT_START = re.compile(r"^(right|exactly|yes|yeah|yep|sure|okay|ok|wow|really|mm+|hm+|oh|good point|true|totally|absolutely|agreed|got it|fair|ha)\b", re.I)
+REACT_START = re.compile(r"^(right|exactly|absolutely|totally|definitely|true|fair point|good point|agreed|got it|wow|oh|okay|ok|sure|really|yes)\b", re.I)
 TOPIC_START = re.compile(r"^(next|now|on the|let's|quick-fire|one more|finally|and now|moving|switching|turning|meanwhile|speaking of|before we)\b", re.I)
 ACTION_WORDS = re.compile(r"\b(rotate|patch|revoke|update|upgrade|audit|block|lock down|make sure|need to)\b", re.I)
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -124,13 +124,15 @@ def plan_turns(turns, base_speed=1.0, natural=True, overlap_scale=1.0):
             plan.append({"speed": base_speed, "gap_after": TURN_GAP, "overlap_next": 0.0})
             continue
         sp = 1.0
-        if q and words <= 12:
+        if REACT_START.search(text) and words <= 12:
+            sp = 0.90                    # a reaction ("Exactly, that is the part to watch.") sounds better a touch slower
+        elif q and words <= 12:
             sp = 1.05
         elif words <= 6:
             sp = 1.07
         elif words >= 10 and ACTION_WORDS.search(text):
             sp = 0.96
-        sp = min(1.15, max(0.85, (sp + _j("t" + text, 0.02)) * base_speed))
+        sp = min(1.15, max(0.85, (sp + _j("t" + text, 0.01 if sp == 0.90 else 0.02)) * base_speed))
         gap, ov = 0.40 + _j("g" + text, 0.08), 0.0
         if i + 1 < n:
             nxt = turns[i + 1][1]
