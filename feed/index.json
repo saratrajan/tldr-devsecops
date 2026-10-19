@@ -1,21 +1,7 @@
 {
  "version": 1,
- "updated": "2026-10-19T21:52:57.232Z",
+ "updated": "2026-10-18T21:52:57.232Z",
  "editions": [
-  {
-   "date": "2026-10-19",
-   "file": "days/2026-10-19.json",
-   "headline": "OpenCode breach leaks API keys of 1.4% of console users",
-   "counts": {
-    "tldr": 4,
-    "it": 5,
-    "devops": 6,
-    "infosec": 6
-   },
-   "total": 21,
-   "pages": 8,
-   "hash": "5000108ac8d0"
-  },
   {
    "date": "2026-10-18",
    "file": "days/2026-10-18.json",
