@@ -9,7 +9,7 @@ and writes, into --out:
     podcast.json   metadata the app reads: date, title, hosts, seconds, bytes, hash and per-turn
                    start times, so the app can highlight the line being spoken.
 
-Voices: HOST_A = Alice = af_heart 70% + af_bella 30%, HOST_B = Michael = am_michael 60% + am_adam 40%
+Voices: HOST_A = Alice = af_heart 70% + af_bella 30%, HOST_B = Michael = bm_fable
 (blends of Kokoro voice styles; override with --voice-a / --voice-b or PODCAST_VOICE_A / PODCAST_VOICE_B,
 for example --voice-b am_michael for the plain voice).
 Models are downloaded once into --models (default ~/.cache/tldr-kokoro).
@@ -25,7 +25,7 @@ import argparse, base64, datetime, hashlib, json, os, re, shutil, subprocess, sy
 
 MODEL_BASE = "https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0"
 MODEL_FILES = {"kokoro-v1.0.onnx": 300_000_000, "voices-v1.0.bin": 20_000_000}   # minimum plausible sizes
-VOICES = {"A": "af_heart:0.7,af_bella:0.3", "B": "am_michael:0.6,am_adam:0.4"}   # blends: name:weight,name:weight
+VOICES = {"A": "af_heart:0.7,af_bella:0.3", "B": "bm_fable"}   # blends: name:weight,name:weight
 NAMES = {"A": "Alice", "B": "Michael"}
 RATE = 24000
 LEAD, TURN_GAP, CHUNK_GAP, TAIL = 0.25, 0.45, 0.12, 0.6      # seconds of silence
