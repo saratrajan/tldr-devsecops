@@ -1,7 +1,21 @@
 {
  "version": 1,
- "updated": "2026-10-19T23:57:27.910Z",
+ "updated": "2026-10-20T14:35:07.746Z",
  "editions": [
+  {
+   "date": "2026-10-20",
+   "file": "days/2026-10-20.json",
+   "headline": "Cisco Secure Email Gateway zero-day exploited again",
+   "counts": {
+    "tldr": 9,
+    "it": 7,
+    "devops": 0,
+    "infosec": 9
+   },
+   "total": 25,
+   "pages": 9,
+   "hash": "3c192bab80a5"
+  },
   {
    "date": "2026-10-19",
    "file": "days/2026-10-19.json",
