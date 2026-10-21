@@ -72,6 +72,7 @@ a{color:inherit}
 .rank-list b{font:700 10px var(--mono);color:var(--orange);padding-top:2px}
 .cover-foot{display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding-top:11px;border-top:1px solid rgba(255,255,255,.2);color:#b8c1cd;font:500 9px var(--mono);letter-spacing:.07em;text-transform:uppercase}
 .todayfoot{display:flex;justify-content:space-between;align-items:center;padding:12px 2px 0;flex:0 0 auto}
+.todayfoot .mono{font-size:7px}
 
 /* Archive */
 .searchbox{display:flex;align-items:center;gap:8px;border:1px solid var(--line);padding:0 12px;height:44px;border-radius:8px;margin-bottom:12px;color:var(--muted);flex:0 0 auto}
@@ -206,6 +207,7 @@ a.item,a.tile{cursor:pointer}
 @font-face{font-family:"Silkscreen";font-weight:700;font-display:block;src:url(../fonts/silkscreen-latin-700-normal.woff2) format("woff2")}
 @font-face{font-family:"VT323";font-weight:400;font-display:block;src:url(../fonts/vt323-latin-400-normal.woff2) format("woff2")}
 .todayacts{display:flex;gap:8px;align-items:center}
+.todayacts .pill{font-size:7px}
 .pill-listen{display:inline-flex;align-items:center;gap:6px;background:var(--orange);border-color:var(--orange);color:#fff}
 .pill-listen[hidden],.iconbtn[hidden]{display:none}
 .pl-ico svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:block}
