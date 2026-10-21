@@ -25,11 +25,11 @@ const words=s=>s.split(/\s+/).filter(Boolean).length;
 function lintScript(text){
   const {turns,errors}=parseScript(text),warnings=[];
   const err=m=>errors.push(m),warn=m=>warnings.push(m);
-  let total=0;
+  let total=0,chars=0;
   if(turns.length&&turns[0].h!=='A')err('the first line must be HOST_A (Alice opens the show)');
   let run=0,prev='';
   turns.forEach(t=>{
-    const w=words(t.t);total+=w;
+    const w=words(t.t);total+=w;chars+=t.t.length;
     if(w>LIMITS.maxTurnWords)err(`line ${t.line}: ${w} words in one turn (max ${LIMITS.maxTurnWords}); split it into shorter turns`);
     else if(w>LIMITS.warnTurnWords)warn(`line ${t.line}: long turn (${w} words)`);
     run=t.h===prev?run+1:1;prev=t.h;
@@ -58,7 +58,7 @@ function lintScript(text){
   const all=turns.map(t=>t.t).join(' ');
   if(!/\bAlice\b/.test(all))warn('Alice is never named');
   if(!/\bMichael\b/.test(all))warn('Michael is never named');
-  return {ok:errors.length===0,errors,warnings,stats:{turns:turns.length,words:total,minutes:+(total/142).toFixed(1)}};
+  return {ok:errors.length===0,errors,warnings,stats:{turns:turns.length,words:total,chars,minutes:+(total/142).toFixed(1)}};
 }
 
 // meta: parsed podcast.json. mp3Path optional: also checks the audio file itself.

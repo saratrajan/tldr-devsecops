@@ -8,4 +8,4 @@ let text;try{text=fs.readFileSync(f,'utf8')}catch(e){console.error('SCRIPT LINT 
 const r=lintScript(text);
 r.warnings.forEach(w=>console.log('warn: '+w));
 if(!r.ok){r.errors.forEach(e=>console.error('error: '+e));console.error('SCRIPT LINT FAIL');process.exit(1)}
-console.log(`SCRIPT LINT OK: ${r.stats.turns} turns, ${r.stats.words} words, about ${r.stats.minutes} min`);
+console.log(`SCRIPT LINT OK: ${r.stats.turns} turns, ${r.stats.words} words, ${r.stats.chars} characters, about ${r.stats.minutes} min`);
