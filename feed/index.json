@@ -1,7 +1,21 @@
 {
  "version": 1,
- "updated": "2026-10-20T14:35:07.746Z",
+ "updated": "2026-10-21T14:34:18.647Z",
  "editions": [
+  {
+   "date": "2026-10-21",
+   "file": "days/2026-10-21.json",
+   "headline": "BeyondTrust zero-day exploited since late August",
+   "counts": {
+    "tldr": 4,
+    "it": 6,
+    "devops": 6,
+    "infosec": 5
+   },
+   "total": 21,
+   "pages": 8,
+   "hash": "437827be602a"
+  },
   {
    "date": "2026-10-20",
    "file": "days/2026-10-20.json",
