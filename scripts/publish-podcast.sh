@@ -6,12 +6,13 @@
 # What it does, in order (any failure stops the run and publishes nothing):
 #   1. lints the script (format, length, no URLs or emails, speakable numbers)
 #   2. checks --date is the newest edition in feed/index.json (the app only shows Listen for that day)
-#   3. installs kokoro-onnx and soundfile if missing, then synthesizes with scripts/podcast/synth.py
+#   3. synthesizes with scripts/podcast/synth.py: Google Chirp 3 HD voices first, local Kokoro if Google fails
+#      (Kokoro is installed only when it is needed)
 #   4. lints the result (mp3 really is an mp3, duration 4 to 10 minutes, hash and size match podcast.json)
 #   5. force-pushes ONE commit holding latest.mp3 and podcast.json to the "podcast" branch.
 #      The branch is replaced every day, so old audio never piles up in the repository history.
 #
-# Env: PODCAST_BRANCH (default podcast), PODCAST_BITRATE (default 128k), PODCAST_WORK (work folder),
+# Env: PODCAST_ENGINE (google, the default, or kokoro to skip Google), PODCAST_BRANCH (default podcast), PODCAST_BITRATE (default 128k), PODCAST_WORK (work folder),
 #      PODCAST_SYNTH (alternative synth command, used by tests), NO_PUSH=1 (build and lint, do not push),
 #      PODCAST_REMOTE (git remote URL; default is this repo's origin).
 # Exit: 0 published, 1 failed (nothing pushed).
@@ -45,11 +46,26 @@ if [ -n "${PODCAST_SYNTH:-}" ]; then
   $PODCAST_SYNTH --script "$SCRIPT" --out "$WORK" --date "$DATE" || fail "synthesis failed"
 else
   command -v ffmpeg >/dev/null || fail "ffmpeg is required"
-  python3 -c "import kokoro_onnx, soundfile" 2>/dev/null || {
-    echo "installing kokoro-onnx and soundfile"
-    python3 -m pip install --break-system-packages -q kokoro-onnx soundfile || fail "pip install failed"
-  }
-  python3 scripts/podcast/synth.py --script "$SCRIPT" --out "$WORK" --date "$DATE" --bitrate "${PODCAST_BITRATE:-128k}" || fail "synthesis failed"
+  ENGINE="${PODCAST_ENGINE:-google}"      # google = Chirp 3 HD voices first; kokoro = local fallback
+  BITRATE="${PODCAST_BITRATE:-128k}"
+  if [ "$ENGINE" = google ]; then
+    python3 -c "import numpy, soundfile" 2>/dev/null || python3 -m pip install --break-system-packages -q numpy soundfile || fail "pip install failed"
+    if python3 scripts/podcast/synth.py --engine google --script "$SCRIPT" --out "$WORK" --date "$DATE" --bitrate "$BITRATE"; then
+      echo "engine: google (Chirp 3 HD)"
+    else
+      echo "google synthesis failed, falling back to kokoro" >&2
+      rm -f "$WORK/latest.mp3" "$WORK/latest.wav" "$WORK/podcast.json"
+      ENGINE=kokoro
+    fi
+  fi
+  if [ "$ENGINE" = kokoro ]; then
+    python3 -c "import kokoro_onnx, soundfile" 2>/dev/null || {
+      echo "installing kokoro-onnx and soundfile"
+      python3 -m pip install --break-system-packages -q kokoro-onnx soundfile || fail "pip install failed"
+    }
+    python3 scripts/podcast/synth.py --engine kokoro --script "$SCRIPT" --out "$WORK" --date "$DATE" --bitrate "$BITRATE" || fail "synthesis failed"
+    echo "engine: kokoro"
+  fi
 fi
 
 echo "== 4/5 lint result"

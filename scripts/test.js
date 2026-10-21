@@ -168,6 +168,8 @@ const lintFeed=feed=>spawnSync('node',[path.join(__dirname,'lint-feed.js')],{env
     else t('podcast: the spectrum is computed from real audio (tone lands in its band, silence stays dark)',()=>assert.strictEqual(py.status,0,py.stdout+py.stderr)); }
   { const py=spawnSync('python3',[path.join(__dirname,'podcast','test_plan.py')],{encoding:'utf8'});
     t('podcast: pacing, pauses, overlap and voice blending are planned as designed',()=>assert.strictEqual(py.status,0,py.stdout+py.stderr)); }
+  { const py=spawnSync('python3',[path.join(__dirname,'podcast','synth.py'),'--engine','google','--voice-a','en-US-Studio-O','--script',path.join(root,'reference','podcast-example-script.txt'),'--out',path.join(os.tmpdir(),'tldr-synth-guard'),'--date','2026-10-19'],{encoding:'utf8',env:{...process.env,PYTHONDONTWRITEBYTECODE:'1'}});
+    t('podcast: the Google engine refuses any voice that is not an allowed Chirp 3 HD voice, before any request is made',()=>{assert.strictEqual(py.status,1,py.stdout+py.stderr);assert.ok(/not an allowed Google voice/.test(py.stderr),py.stderr)}); }
   t('podcast script: robotic fillers (hm, mm, uh, um, huh, yeah) are rejected, real reactions are fine',()=>{
     for(const bad of ["Hm, that's the part to watch.","Hmm, right.","Mm, okay.","Mmm.","Uh, so.","Um, well.","Huh, that's odd.","Yeah, that matters.","Mhm.","Hhmm, true."])
       assert.ok(/filler/.test(errs(good+'\nHOST_A: '+bad+'\n')),bad);

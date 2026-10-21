@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Two-host podcast synthesis with local Kokoro (kokoro-onnx). No cloud TTS, no API quota.
+"""Two-host podcast synthesis. Engines: Google Cloud Text-to-Speech Chirp 3 HD voices (--engine google, the first
+choice) or local Kokoro (kokoro-onnx, no cloud, no quota). publish-podcast.sh tries Google and falls back to Kokoro.
 
 Reads a script made of lines like
     HOST_A: <text>
@@ -9,7 +10,11 @@ and writes, into --out:
     podcast.json   metadata the app reads: date, title, hosts, seconds, bytes, hash and per-turn
                    start times, so the app can highlight the line being spoken.
 
-Voices: HOST_A = Alice = af_heart 70% + af_bella 30%, HOST_B = Michael = bm_fable
+Google: HOST_A = en-US-Chirp3-HD-Kore, HOST_B = en-US-Chirp3-HD-Schedar. Plain text only (no SSML), so all pauses
+come from the silence this script inserts. No credentials are read here: the sandbox proxy adds the access token
+for texttospeech.googleapis.com. Only Chirp 3 HD voices are accepted, so a paid voice can never be used by accident.
+
+Kokoro voices: HOST_A = Alice = af_heart 70% + af_bella 30%, HOST_B = Michael = bm_fable
 (blends of Kokoro voice styles; override with --voice-a / --voice-b or PODCAST_VOICE_A / PODCAST_VOICE_B,
 for example --voice-b am_michael for the plain voice).
 Models are downloaded once into --models (default ~/.cache/tldr-kokoro).
@@ -30,6 +35,11 @@ NAMES = {"A": "Alice", "B": "Michael"}
 RATE = 24000
 LEAD, TURN_GAP, CHUNK_GAP, TAIL = 0.25, 0.45, 0.12, 0.6      # seconds of silence
 MAX_CHUNK_CHARS = 280
+GOOGLE_URL = "https://texttospeech.googleapis.com/v1/text:synthesize"
+GOOGLE_VOICES = {"A": "en-US-Chirp3-HD-Kore", "B": "en-US-Chirp3-HD-Schedar"}
+GOOGLE_ALLOWED = ("Chirp3-HD",)   # the free-allowance voice family; Studio, Chirp HD and Polyglot are paid
+GOOGLE_DEADLINE = 330              # seconds; past this Google is abandoned so the Kokoro fallback still fits the routine's time limit
+START = time.time()
 REACT_START = re.compile(r"^(right|exactly|absolutely|totally|definitely|true|fair point|good point|agreed|got it|wow|oh|okay|ok|sure|really|yes)\b", re.I)
 TOPIC_START = re.compile(r"^(next|now|on the|let's|quick-fire|one more|finally|and now|moving|switching|turning|meanwhile|speaking of|before we)\b", re.I)
 ACTION_WORDS = re.compile(r"\b(rotate|patch|revoke|update|upgrade|audit|block|lock down|make sure|need to)\b", re.I)
@@ -253,6 +263,38 @@ def ffprobe_seconds(path):
     return float(r.stdout.strip())
 
 
+def google_create(text, voice, speed, sf):
+    """One Cloud Text-to-Speech request, plain text. No credentials here: the sandbox proxy adds the token for this host.
+    Pace is applied afterwards with ffmpeg atempo.
+    Rate limits and server errors are retried; anything else (quota, permission, billing, blocked host) stops at once."""
+    import io, urllib.error
+    body = json.dumps({"input": {"text": text}, "voice": {"languageCode": "en-US", "name": voice},
+                       "audioConfig": {"audioEncoding": "LINEAR16", "sampleRateHertz": RATE}}).encode()
+    for attempt in range(6):
+        try:
+            req = urllib.request.Request(GOOGLE_URL, body, {"Content-Type": "application/json"})
+            with urllib.request.urlopen(req, timeout=60) as r:
+                wav = base64.b64decode(json.load(r)["audioContent"])
+            break
+        except urllib.error.HTTPError as e:
+            if e.code not in (429, 500, 502, 503, 504) or attempt == 5 or time.time() - START > GOOGLE_DEADLINE:
+                die(f"google tts failed: HTTP {e.code} {e.read()[:200].decode(errors='replace')}")
+            wait = 15 * (attempt + 1) if e.code == 429 else 2 ** attempt     # a per-minute quota needs a real pause
+            print(f"synth: google HTTP {e.code}, waiting {wait}s (try {attempt + 2}/6)", file=sys.stderr, flush=True)
+            time.sleep(wait)
+        except Exception as e:                      # network blip or blocked host
+            if attempt == 5:
+                die(f"google tts failed: {e}")
+            time.sleep(2 ** attempt)
+    if abs(speed - 1.0) > 0.005:
+        r = subprocess.run(["ffmpeg", "-loglevel", "error", "-f", "wav", "-i", "pipe:0", "-filter:a", f"atempo={speed:.3f}",
+                            "-f", "wav", "pipe:1"], input=wav, capture_output=True)
+        if r.returncode:
+            die("ffmpeg atempo failed: " + r.stderr.decode().strip())
+        wav = r.stdout
+    return sf.read(io.BytesIO(wav), dtype="float32")
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--script", required=True)
@@ -262,8 +304,9 @@ def main():
     ap.add_argument("--speed", type=float, default=1.0)
     ap.add_argument("--style", choices=["natural", "plain"], default=os.environ.get("PODCAST_STYLE", "natural"))
     ap.add_argument("--overlap", type=float, default=1.0, help="0 turns overlapping off, 1 is normal, 1.5 is more")
-    ap.add_argument("--voice-a", default=os.environ.get("PODCAST_VOICE_A", VOICES["A"]))
-    ap.add_argument("--voice-b", default=os.environ.get("PODCAST_VOICE_B", VOICES["B"]))
+    ap.add_argument("--engine", choices=["kokoro", "google"], default=os.environ.get("PODCAST_ENGINE", "kokoro"))
+    ap.add_argument("--voice-a", default=os.environ.get("PODCAST_VOICE_A"))
+    ap.add_argument("--voice-b", default=os.environ.get("PODCAST_VOICE_B"))
     ap.add_argument("--limit-turns", type=int, default=0, help="only the first N turns (for voice samples)")
     ap.add_argument("--models", default=os.path.expanduser("~/.cache/tldr-kokoro"))
     a = ap.parse_args()
@@ -272,20 +315,29 @@ def main():
         die("--date must be YYYY-MM-DD")
     if not shutil.which("ffmpeg") or not shutil.which("ffprobe"):
         die("ffmpeg and ffprobe are required")
+    google = a.engine == "google"
+    names = GOOGLE_VOICES if google else VOICES
+    a.voice_a, a.voice_b = a.voice_a or names["A"], a.voice_b or names["B"]
+    if google:
+        for v in (a.voice_a, a.voice_b):
+            if not any(t in v for t in GOOGLE_ALLOWED):
+                die(f"voice '{v}' is not an allowed Google voice {GOOGLE_ALLOWED}; other Google voices are paid")
     try:
         import numpy as np
         import soundfile as sf
-        from kokoro_onnx import Kokoro
+        if not google:
+            from kokoro_onnx import Kokoro
     except ImportError as e:
         die(f"missing python package ({e}). Run: python3 -m pip install --break-system-packages kokoro-onnx soundfile")
 
     turns = parse_script(a.script)
     pron = load_pronounce()
-    model, voices = ensure_models(a.models)
     os.makedirs(a.out, exist_ok=True)
 
     t0 = time.time()
-    kokoro = Kokoro(model, voices)
+    if not google:
+        model, voices = ensure_models(a.models)
+        kokoro = Kokoro(model, voices)
     natural = a.style == "natural"
 
     def resolve(spec):
@@ -299,7 +351,7 @@ def main():
         tot = sum(w for _, w in items)
         return sum(kokoro.get_voice_style(nm) * (w / tot) for nm, w in items).astype(np.float32)
 
-    voice_of = {"A": resolve(a.voice_a), "B": resolve(a.voice_b)}
+    voice_of = {"A": a.voice_a, "B": a.voice_b} if google else {"A": resolve(a.voice_a), "B": resolve(a.voice_b)}
     if a.limit_turns:
         turns = turns[:a.limit_turns]
     plan = plan_turns(turns, a.speed, natural, a.overlap)
@@ -326,7 +378,10 @@ def main():
         turn_audio = []
         for j, chunk in enumerate(chunks):
             sp, cgap = chunk_pace(chunk, j, len(chunks), plan[i - 1]["speed"], natural)
-            samples, sr = kokoro.create(chunk, voice=voice_of[h], speed=sp, lang="en-us")
+            if google:
+                samples, sr = google_create(chunk, voice_of[h], sp, sf)
+            else:
+                samples, sr = kokoro.create(chunk, voice=voice_of[h], speed=sp, lang="en-us")
             if sr != RATE:
                 die(f"unexpected sample rate {sr}")
             samples = edge(samples.astype(np.float32))
