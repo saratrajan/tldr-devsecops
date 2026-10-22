@@ -1,7 +1,21 @@
 {
  "version": 1,
- "updated": "2026-10-21T16:28:53.077Z",
+ "updated": "2026-10-22T14:33:53.826Z",
  "editions": [
+  {
+   "date": "2026-10-22",
+   "file": "days/2026-10-22.json",
+   "headline": "PHP zero-days exploited, emergency patches out",
+   "counts": {
+    "tldr": 9,
+    "it": 1,
+    "devops": 0,
+    "infosec": 6
+   },
+   "total": 16,
+   "pages": 7,
+   "hash": "92f27e1d923b"
+  },
   {
    "date": "2026-10-21",
    "file": "days/2026-10-21.json",
