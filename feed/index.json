@@ -1,7 +1,21 @@
 {
  "version": 1,
- "updated": "2026-10-22T14:33:53.826Z",
+ "updated": "2026-10-23T14:34:23.693Z",
  "editions": [
+  {
+   "date": "2026-10-23",
+   "file": "days/2026-10-23.json",
+   "headline": "PHP2Shell RCE zero-days exploited since October 17",
+   "counts": {
+    "tldr": 8,
+    "it": 1,
+    "devops": 0,
+    "infosec": 11
+   },
+   "total": 20,
+   "pages": 8,
+   "hash": "e9be6005bb23"
+  },
   {
    "date": "2026-10-22",
    "file": "days/2026-10-22.json",
