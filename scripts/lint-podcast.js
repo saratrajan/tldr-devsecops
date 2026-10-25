@@ -10,4 +10,4 @@ const mp3=process.argv[3]||path.join(path.dirname(f),'latest.mp3');
 const r=lintMeta(meta,mp3);
 r.warnings.forEach(w=>console.log('warn: '+w));
 if(!r.ok){r.errors.forEach(e=>console.error('error: '+e));console.error('PODCAST LINT FAIL');process.exit(1)}
-console.log(`PODCAST LINT OK: ${meta.date}, ${(meta.seconds/60).toFixed(1)} min, ${(meta.bytes/1e6).toFixed(1)} MB, ${meta.segments.length} turns`);
+console.log(`PODCAST LINT OK: ${meta.date}, ${(meta.seconds/60).toFixed(1)} min, ${(meta.bytes/1e6).toFixed(1)} MB, ${meta.segments.length} turns, ${meta.segments.reduce((n,x)=>n+x.t.length,0)} characters`);
