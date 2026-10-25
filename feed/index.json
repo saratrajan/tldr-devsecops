@@ -1,7 +1,21 @@
 {
  "version": 1,
- "updated": "2026-10-23T14:34:23.693Z",
+ "updated": "2026-10-25T14:34:07.741Z",
  "editions": [
+  {
+   "date": "2026-10-25",
+   "file": "days/2026-10-25.json",
+   "headline": "PHP2Shell RCE flaws hit every PHP since 5, exploited before disclosure",
+   "counts": {
+    "tldr": 4,
+    "it": 6,
+    "devops": 6,
+    "infosec": 11
+   },
+   "total": 27,
+   "pages": 10,
+   "hash": "54a659c429c4"
+  },
   {
    "date": "2026-10-23",
    "file": "days/2026-10-23.json",
