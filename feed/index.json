@@ -1,7 +1,21 @@
 {
  "version": 1,
- "updated": "2026-10-26T14:34:37.124Z",
+ "updated": "2026-10-27T14:46:26.020Z",
  "editions": [
+  {
+   "date": "2026-10-27",
+   "file": "days/2026-10-27.json",
+   "headline": "GHEIST: stolen GitHub tokens plant secret-stealing workflows",
+   "counts": {
+    "tldr": 4,
+    "it": 6,
+    "devops": 0,
+    "infosec": 14
+   },
+   "total": 24,
+   "pages": 8,
+   "hash": "3def36d26ec0"
+  },
   {
    "date": "2026-10-26",
    "file": "days/2026-10-26.json",
