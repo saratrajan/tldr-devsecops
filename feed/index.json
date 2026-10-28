@@ -1,7 +1,21 @@
 {
  "version": 1,
- "updated": "2026-10-27T14:46:26.020Z",
+ "updated": "2026-10-28T14:42:25.905Z",
  "editions": [
+  {
+   "date": "2026-10-28",
+   "file": "days/2026-10-28.json",
+   "headline": "GMO breach: 27,000 servers, $50M demand, customer data posted",
+   "counts": {
+    "tldr": 4,
+    "it": 6,
+    "devops": 6,
+    "infosec": 5
+   },
+   "total": 21,
+   "pages": 8,
+   "hash": "c44dd7dd69c9"
+  },
   {
    "date": "2026-10-27",
    "file": "days/2026-10-27.json",
