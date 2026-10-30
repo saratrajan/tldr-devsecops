@@ -37,6 +37,7 @@ check("spelled A P I is spoken with a letter A", tc("the A P I keys", pr) == "th
 check("A I and A W S are spoken with a letter A", tc("A I agents on A W S", pr) == "Eigh I agents on Eigh W S")
 check("the word API is spoken with a letter A", tc("the API and APIs", pr) == "the Eigh P I and Eigh P Is")
 check("Google skips text substitution for IPA words", tc("AI and the API", pr, skip=ns["load_ipa"]()) == "AI and the API")
+check("Ars Technica is spoken Arz on Kokoro", tc("Ars Technica reports", pr) == "Arz Technica reports")
 check("the article A is left alone", tc("A new ransomware and A Postgres bug", pr) == "A new ransomware and A Postgres bug")
 check("names with an A are left alone", tc("Alice and Anthropic", pr) == "Alice and Anthropic")
 check("Hm is spoken as a hum, not the letters H M", tc("Hm, that is odd. And hm, maybe. Mm, right.", pr) == "Hmm, that is odd. And hmm, maybe. Hmm, right.", tc("Hm, that is odd. And hm, maybe. Mm, right.", pr))
