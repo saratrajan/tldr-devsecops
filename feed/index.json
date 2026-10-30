@@ -1,21 +1,7 @@
 {
  "version": 1,
- "updated": "2026-10-30T15:32:40.702Z",
+ "updated": "2026-10-29T15:32:40.702Z",
  "editions": [
-  {
-   "date": "2026-10-30",
-   "file": "days/2026-10-30.json",
-   "headline": "iRhythm breach toll reaches 8.2 million people",
-   "counts": {
-    "tldr": 4,
-    "it": 6,
-    "devops": 7,
-    "infosec": 10
-   },
-   "total": 27,
-   "pages": 10,
-   "hash": "9c4d2035df5c"
-  },
   {
    "date": "2026-10-29",
    "file": "days/2026-10-29.json",
