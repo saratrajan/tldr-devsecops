@@ -81,8 +81,8 @@ def tts_clean(text, pron):
     # longest keys first so "CI/CD" wins over "CI"
     for key in sorted(pron, key=len, reverse=True):
         t = re.sub(r"(?<![A-Za-z0-9])" + re.escape(key) + r"(?![A-Za-z0-9])", pron[key], t)
-    # A lone "A" before another spelled letter is read as the article ("uh P I"); "Eigh" is read as the letter A.
-    t = re.sub(r"(?<![A-Za-z'\u2019])A(?= [A-Z](?![A-Za-z]))", "Eigh", t)
+    # A lone "A" before another spelled letter is read as the article ("uh P I"); "Ay" is read as the letter A.
+    t = re.sub(r"(?<![A-Za-z'\u2019])A(?= [A-Z](?![A-Za-z]))", "Ay", t)
     return re.sub(r"\s+", " ", t).strip()
 
 
