@@ -10,7 +10,7 @@ and writes, into --out:
     podcast.json   metadata the app reads: date, title, hosts, seconds, bytes, hash and per-turn
                    start times, so the app can highlight the line being spoken.
 
-Google: HOST_A = en-US-Chirp3-HD-Kore, HOST_B = en-US-Chirp3-HD-Schedar. Plain text only (no SSML), so all pauses
+Google: HOST_A = en-US-Chirp3-HD-Kore, HOST_B = en-US-Chirp3-HD-Schedar. Plain text only (no SSML; AI, API, AWS go in as IPA customPronunciations), so all pauses
 come from the silence this script inserts. No credentials are read here: the sandbox proxy adds the access token
 for texttospeech.googleapis.com. Only Chirp 3 HD voices are accepted, so a paid voice can never be used by accident.
 
@@ -73,16 +73,21 @@ def load_pronounce():
     return {k: v for k, v in data.items() if not k.startswith("_")}
 
 
-def tts_clean(text, pron):
+def load_ipa():
+    with open(os.path.join(HERE, "pronounce.json"), encoding="utf-8") as f:
+        return json.load(f).get("_ipa", {})
+
+
+def tts_clean(text, pron, skip=()):
     """Make text easier to speak. The displayed transcript keeps the original text."""
     t = re.sub(r"https?://\S+", "", text)
     t = re.sub(r"[*_`#\[\]]", "", t)
     t = t.replace("&", " and ")
     # longest keys first so "CI/CD" wins over "CI"
-    for key in sorted(pron, key=len, reverse=True):
+    for key in sorted((k for k in pron if k not in skip), key=len, reverse=True):
         t = re.sub(r"(?<![A-Za-z0-9])" + re.escape(key) + r"(?![A-Za-z0-9])", pron[key], t)
-    # A lone "A" before another spelled letter is read as the article ("uh P I"); "Ay" is read as the letter A.
-    t = re.sub(r"(?<![A-Za-z'\u2019])A(?= [A-Z](?![A-Za-z]))", "Ay", t)
+    # A lone "A" before another spelled letter is read as the article ("uh P I"); "Eigh" is read as the letter A.
+    t = re.sub(r"(?<![A-Za-z'\u2019])A(?= [A-Z](?![A-Za-z]))", "Eigh", t)
     return re.sub(r"\s+", " ", t).strip()
 
 
@@ -263,12 +268,17 @@ def ffprobe_seconds(path):
     return float(r.stdout.strip())
 
 
-def google_create(text, voice, speed, sf):
+def google_create(text, voice, speed, sf, ipa=None):
     """One Cloud Text-to-Speech request, plain text. No credentials here: the sandbox proxy adds the token for this host.
     Pace is applied afterwards with ffmpeg atempo.
     Rate limits and server errors are retried; anything else (quota, permission, billing, blocked host) stops at once."""
     import io, urllib.error
-    body = json.dumps({"input": {"text": text}, "voice": {"languageCode": "en-US", "name": voice},
+    inp = {"text": text}
+    hits = [{"phrase": k, "phoneticEncoding": "PHONETIC_ENCODING_IPA", "pronunciation": v} for k, v in (ipa or {}).items()
+            if re.search(r"(?<![A-Za-z0-9])" + re.escape(k) + r"(?![A-Za-z0-9])", text)]
+    if hits:
+        inp["customPronunciations"] = {"pronunciations": hits}
+    body = json.dumps({"input": inp, "voice": {"languageCode": "en-US", "name": voice},
                        "audioConfig": {"audioEncoding": "LINEAR16", "sampleRateHertz": RATE}}).encode()
     for attempt in range(6):
         try:
@@ -332,6 +342,7 @@ def main():
 
     turns = parse_script(a.script)
     pron = load_pronounce()
+    ipa = load_ipa() if google else {}
     os.makedirs(a.out, exist_ok=True)
 
     t0 = time.time()
@@ -373,13 +384,13 @@ def main():
     gap = lambda s: np.zeros(int(s * RATE), dtype=np.float32)   # noqa: E731
     buf, cursor, segments = gap(LEAD), int(LEAD * RATE), []
     for i, (h, text) in enumerate(turns, 1):
-        clean = tts_clean(text, pron)
+        clean = tts_clean(text, pron, skip=ipa)
         chunks = split_sentences(clean) if natural else split_chunks(clean)
         turn_audio = []
         for j, chunk in enumerate(chunks):
             sp, cgap = chunk_pace(chunk, j, len(chunks), plan[i - 1]["speed"], natural)
             if google:
-                samples, sr = google_create(chunk, voice_of[h], sp, sf)
+                samples, sr = google_create(chunk, voice_of[h], sp, sf, ipa)
             else:
                 samples, sr = kokoro.create(chunk, voice=voice_of[h], speed=sp, lang="en-us")
             if sr != RATE:

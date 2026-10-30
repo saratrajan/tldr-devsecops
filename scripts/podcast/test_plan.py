@@ -33,9 +33,10 @@ check("one chunk per sentence", split_sentences("One is here. Two is here? Three
 check("voice blend is parsed", parse_voice("am_michael:0.6,am_adam:0.4") == [("am_michael", 0.6), ("am_adam", 0.4)])
 check("a single voice has weight 1", parse_voice("af_heart") == [("af_heart", 1.0)])
 pr, tc = ns["load_pronounce"](), ns["tts_clean"]
-check("spelled A P I is spoken with a letter A", tc("the A P I keys", pr) == "the Ay P I keys", tc("the A P I keys", pr))
-check("A I and A W S are spoken with a letter A", tc("A I agents on A W S", pr) == "Ay I agents on Ay W S")
-check("the word API is spoken with a letter A", tc("the API and APIs", pr) == "the Ay Pee Eye and Ay Pee Eyes")
+check("spelled A P I is spoken with a letter A", tc("the A P I keys", pr) == "the Eigh P I keys", tc("the A P I keys", pr))
+check("A I and A W S are spoken with a letter A", tc("A I agents on A W S", pr) == "Eigh I agents on Eigh W S")
+check("the word API is spoken with a letter A", tc("the API and APIs", pr) == "the Eigh P I and Eigh P Is")
+check("Google skips text substitution for IPA words", tc("AI and the API", pr, skip=ns["load_ipa"]()) == "AI and the API")
 check("the article A is left alone", tc("A new ransomware and A Postgres bug", pr) == "A new ransomware and A Postgres bug")
 check("names with an A are left alone", tc("Alice and Anthropic", pr) == "Alice and Anthropic")
 check("Hm is spoken as a hum, not the letters H M", tc("Hm, that is odd. And hm, maybe. Mm, right.", pr) == "Hmm, that is odd. And hmm, maybe. Hmm, right.", tc("Hm, that is odd. And hm, maybe. Mm, right.", pr))
