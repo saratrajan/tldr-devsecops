@@ -1,7 +1,21 @@
 {
  "version": 1,
- "updated": "2026-10-30T19:18:51.429Z",
+ "updated": "2026-11-02T16:09:03.428Z",
  "editions": [
+  {
+   "date": "2026-11-02",
+   "file": "days/2026-11-02.json",
+   "headline": "Max-severity GitLab flaw exploited against Alpine Linux",
+   "counts": {
+    "tldr": 4,
+    "it": 6,
+    "devops": 6,
+    "infosec": 11
+   },
+   "total": 27,
+   "pages": 10,
+   "hash": "2f27abc721c6"
+  },
   {
    "date": "2026-10-30",
    "file": "days/2026-10-30.json",
