@@ -1,7 +1,21 @@
 {
  "version": 1,
- "updated": "2026-11-02T16:09:03.428Z",
+ "updated": "2026-11-03T15:34:28.813Z",
  "editions": [
+  {
+   "date": "2026-11-03",
+   "file": "days/2026-11-03.json",
+   "headline": "Langflow flaws allow unauthenticated code execution",
+   "counts": {
+    "tldr": 4,
+    "it": 6,
+    "devops": 6,
+    "infosec": 11
+   },
+   "total": 27,
+   "pages": 10,
+   "hash": "89a2f39c835c"
+  },
   {
    "date": "2026-11-02",
    "file": "days/2026-11-02.json",
