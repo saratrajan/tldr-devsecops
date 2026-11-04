@@ -1,7 +1,21 @@
 {
  "version": 1,
- "updated": "2026-11-03T15:34:28.813Z",
+ "updated": "2026-11-04T15:33:47.913Z",
  "editions": [
+  {
+   "date": "2026-11-04",
+   "file": "days/2026-11-04.json",
+   "headline": "Mandiant: stolen LLM keys cost victims $100K a day",
+   "counts": {
+    "tldr": 4,
+    "it": 5,
+    "devops": 6,
+    "infosec": 11
+   },
+   "total": 26,
+   "pages": 9,
+   "hash": "48e1c66b083c"
+  },
   {
    "date": "2026-11-03",
    "file": "days/2026-11-03.json",
