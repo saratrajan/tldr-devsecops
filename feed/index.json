@@ -1,7 +1,21 @@
 {
  "version": 1,
- "updated": "2026-11-06T15:33:34.087Z",
+ "updated": "2026-11-09T15:34:01.917Z",
  "editions": [
+  {
+   "date": "2026-11-09",
+   "file": "days/2026-11-09.json",
+   "headline": "*sshole bug lets attackers into Alpine SSH with no password",
+   "counts": {
+    "tldr": 4,
+    "it": 5,
+    "devops": 0,
+    "infosec": 6
+   },
+   "total": 15,
+   "pages": 6,
+   "hash": "fdacf2792af2"
+  },
   {
    "date": "2026-11-06",
    "file": "days/2026-11-06.json",
