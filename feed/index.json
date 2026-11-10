@@ -1,7 +1,21 @@
 {
  "version": 1,
- "updated": "2026-11-09T15:34:01.917Z",
+ "updated": "2026-11-10T15:33:21.684Z",
  "editions": [
+  {
+   "date": "2026-11-10",
+   "file": "days/2026-11-10.json",
+   "headline": "SonicWall SSL-VPN MFA bypass exploited, added to CISA KEV",
+   "counts": {
+    "tldr": 4,
+    "it": 7,
+    "devops": 0,
+    "infosec": 5
+   },
+   "total": 16,
+   "pages": 7,
+   "hash": "8cdf3b87f7ee"
+  },
   {
    "date": "2026-11-09",
    "file": "days/2026-11-09.json",
