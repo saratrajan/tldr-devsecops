@@ -1,7 +1,21 @@
 {
  "version": 1,
- "updated": "2026-11-16T15:33:40.540Z",
+ "updated": "2026-11-17T15:34:16.119Z",
  "editions": [
+  {
+   "date": "2026-11-17",
+   "file": "days/2026-11-17.json",
+   "headline": "Maileva breach exposes data of 22 million people",
+   "counts": {
+    "tldr": 4,
+    "it": 5,
+    "devops": 0,
+    "infosec": 10
+   },
+   "total": 19,
+   "pages": 7,
+   "hash": "c2c180a149f4"
+  },
   {
    "date": "2026-11-16",
    "file": "days/2026-11-16.json",
