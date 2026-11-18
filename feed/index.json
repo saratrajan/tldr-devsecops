@@ -1,7 +1,21 @@
 {
  "version": 1,
- "updated": "2026-11-17T15:34:16.119Z",
+ "updated": "2026-11-18T15:33:35.668Z",
  "editions": [
+  {
+   "date": "2026-11-18",
+   "file": "days/2026-11-18.json",
+   "headline": "Optimizely breach spreads malware across 178 organizations",
+   "counts": {
+    "tldr": 4,
+    "it": 2,
+    "devops": 6,
+    "infosec": 8
+   },
+   "total": 20,
+   "pages": 8,
+   "hash": "d903a9c1e342"
+  },
   {
    "date": "2026-11-17",
    "file": "days/2026-11-17.json",
