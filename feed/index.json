@@ -1,7 +1,21 @@
 {
  "version": 1,
- "updated": "2026-11-19T15:33:49.556Z",
+ "updated": "2026-11-20T15:33:29.606Z",
  "editions": [
+  {
+   "date": "2026-11-20",
+   "file": "days/2026-11-20.json",
+   "headline": "Apache Roller RCE under active exploitation",
+   "counts": {
+    "tldr": 4,
+    "it": 6,
+    "devops": 6,
+    "infosec": 10
+   },
+   "total": 26,
+   "pages": 9,
+   "hash": "b7f153fe1c2f"
+  },
   {
    "date": "2026-11-19",
    "file": "days/2026-11-19.json",
