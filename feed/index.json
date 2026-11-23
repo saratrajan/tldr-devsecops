@@ -1,7 +1,21 @@
 {
  "version": 1,
- "updated": "2026-11-20T15:33:29.606Z",
+ "updated": "2026-11-23T15:35:14.824Z",
  "editions": [
+  {
+   "date": "2026-11-23",
+   "file": "days/2026-11-23.json",
+   "headline": "Researchers plant 2M canaries, find leaky AI supply chain",
+   "counts": {
+    "tldr": 5,
+    "it": 1,
+    "devops": 5,
+    "infosec": 4
+   },
+   "total": 15,
+   "pages": 6,
+   "hash": "a27e9ca26eb2"
+  },
   {
    "date": "2026-11-20",
    "file": "days/2026-11-20.json",
