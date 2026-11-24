@@ -1,7 +1,21 @@
 {
  "version": 1,
- "updated": "2026-11-23T15:35:14.824Z",
+ "updated": "2026-11-24T15:33:30.215Z",
  "editions": [
+  {
+   "date": "2026-11-24",
+   "file": "days/2026-11-24.json",
+   "headline": "Cisco Expressway root RCE under active attack",
+   "counts": {
+    "tldr": 4,
+    "it": 6,
+    "devops": 5,
+    "infosec": 7
+   },
+   "total": 22,
+   "pages": 8,
+   "hash": "f4c725468d5c"
+  },
   {
    "date": "2026-11-23",
    "file": "days/2026-11-23.json",
