@@ -1,7 +1,21 @@
 {
  "version": 1,
- "updated": "2026-11-24T15:33:37.443Z",
+ "updated": "2026-11-25T15:33:18.737Z",
  "editions": [
+  {
+   "date": "2026-11-25",
+   "file": "days/2026-11-25.json",
+   "headline": "Abandoned ASP.NET library exploited for unauthenticated RCE",
+   "counts": {
+    "tldr": 8,
+    "it": 6,
+    "devops": 5,
+    "infosec": 6
+   },
+   "total": 25,
+   "pages": 9,
+   "hash": "3326f34c4439"
+  },
   {
    "date": "2026-11-24",
    "file": "days/2026-11-24.json",
