@@ -1,7 +1,21 @@
 {
  "version": 1,
- "updated": "2026-11-25T15:33:18.737Z",
+ "updated": "2026-11-26T15:33:31.488Z",
  "editions": [
+  {
+   "date": "2026-11-26",
+   "file": "days/2026-11-26.json",
+   "headline": "1Password backend breached via hijacked employee GitHub account",
+   "counts": {
+    "tldr": 4,
+    "it": 6,
+    "devops": 0,
+    "infosec": 9
+   },
+   "total": 19,
+   "pages": 7,
+   "hash": "9e016e637598"
+  },
   {
    "date": "2026-11-25",
    "file": "days/2026-11-25.json",
