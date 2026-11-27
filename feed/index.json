@@ -1,7 +1,21 @@
 {
  "version": 1,
- "updated": "2026-11-26T15:33:31.488Z",
+ "updated": "2026-11-27T15:33:16.062Z",
  "editions": [
+  {
+   "date": "2026-11-27",
+   "file": "days/2026-11-27.json",
+   "headline": "PolinRider force-pushes malware into 7,600+ GitHub repos",
+   "counts": {
+    "tldr": 4,
+    "it": 5,
+    "devops": 1,
+    "infosec": 11
+   },
+   "total": 21,
+   "pages": 8,
+   "hash": "79ad17cdee11"
+  },
   {
    "date": "2026-11-26",
    "file": "days/2026-11-26.json",
